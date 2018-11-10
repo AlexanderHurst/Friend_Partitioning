@@ -176,6 +176,5 @@ if __name__ == "__main__":
                       "\nGroup One:", groupOne,
                       "\nGroup Two:", groupTwo)
                 break
-        print(bin(groupOneBin))
 # time!
 print(time() - start)
