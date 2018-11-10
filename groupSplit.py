@@ -6,45 +6,35 @@ from time import time
 # if person 0 is not freindly with person 2
 # this will add 1 and 4 or 0001 and 0100 to get 0101
 # which will signify their bad relationship
-# it also keeps track of the lsb that is one for use later
-# if there is a collision we will use this to skip all combinations
-# that would occur before splitting these two up
+# it also keeps track of the lsb that is one (this is the person
+# with the lowest binary representation) so that
+# if there is a collision we can move them to skip combinations
+# that would occur before splitting those two up
 def get_bad_relations(friend_arr, n, rel_arr):
     for i in range(n-1, -1, -1):
-        for j in range(i+1, n):
+        for j in range(n-1, i, -1):
             if friend_arr[i][j] == 0:
                 rel_arr.append([2 ** i + 2 ** j, 2 ** i])
 
 
-# returns true if there are any conflicts with the group
-# and the friends matrix, false otherwise
+# if there are any conflicts with the group
+# this will return the binary representation
+# of the user who first conflicts with the person
+# who has the highest representation
+# returns 0 otherwise for no conflicts
 def conflict(rel_arr, group):
-
     for i in rel_arr:
         if i[0] & group == i[0]:
             return i[1]
-    # run until we have checked each person against all others
-    # while len(group) > 0:
-    #     # remove the person from the list
-    #     # as we dont need to check them against themselves
-    #     # and wont need to check them with anyone else after
-    #     current = group.pop()
-    #     # check against all people in the group
-    #     for i in group:
-    #         # if there is a problem return true
-    #         if friend_arr[i][current] == 0:
-    #             return True
-    # # otherwise return that there were no problems
     return 0
 
-
+# this function just creates a list representation of the groups
+# as the binary representation is not as pretty
 def create_groups(bin_num, friend_num, groupOne, groupTwo):
-    # for each person
     for i in range(friend_num):
-
-        # if the bit in their place in the
+        # if the bit in this place in the
         # binary group representation is one
-        # add their place in the binary group to the list
+        # add that person to the list
         if (groupOneBin >> i) & 1 == 1:
             groupOne.append(i+1)
 
@@ -56,11 +46,7 @@ def create_groups(bin_num, friend_num, groupOne, groupTwo):
 
 if __name__ == "__main__":
 
-    # half the array will never be accessed
-    # and is not needed I will just leave it as none
-    z = None
     friend_arr = [
-
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
@@ -141,10 +127,11 @@ if __name__ == "__main__":
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-
-
     ]
+
+    # ready, set, go!
+    start = time()
+
     friend_num = len(friend_arr)
 
     rel_arr = []
@@ -156,29 +143,32 @@ if __name__ == "__main__":
     # digit set to 1 for example with n = 8
     # this will be 11111111
     groupOneBin = (2 ** friend_num)-1
+    # the second group however will start with no members
     groupTwoBin = 0
 
-    # ready, set, go!
-    start = time()
-
-    # we can stop checking when the binary number that would
-    # represent the second group is greater than the first group
+    # we can stop checking when the binary number that
+    # represents the second group is greater than the first group
     # at this point we have checked all possible splits
-    # to avoid keeping track of a second binary number
-    # this pass would happen at half, which we can calculate as follows
-    while groupOneBin >= (2 ** (friend_num-1)):
+    while groupOneBin >= groupTwoBin:
 
-        # check both lists to see if there are no conflicts in either
+        # check the first group for conflicts, if there are any
+        # move the person who is conflicting with the person with the
+        # highest binary representation, if there are multiple people
+        # conflicting this will be the person of them with the highest
+        # binary representation which will usually result in removing the 
+        # most work possible 
         r_conflict = conflict(rel_arr, groupOneBin)
         if r_conflict != 0:
             groupOneBin -= r_conflict
             groupTwoBin += r_conflict
         else:
+            # if the second group has the conflict do the same process
             r_conflict = conflict(rel_arr, groupTwoBin)
             if r_conflict != 0:
                 groupOneBin -= r_conflict
                 groupTwoBin += r_conflict
             else:
+                # if neither group has a canflict we have a solution, create the lists and give the user their answer
                 groupOne = []
                 groupTwo = []
                 create_groups(groupOneBin, friend_num, groupOne, groupTwo)
@@ -187,14 +177,5 @@ if __name__ == "__main__":
                       "\nGroup Two:", groupTwo)
                 break
         print(bin(groupOneBin))
-        # if (not conflict(friend_arr, groupOneBin)) and (not conflict(friend_arr, groupTwoBin)):
-        #         # if there are no conflicts this is the solution, bingo, stop checking
-        #     create_groups(groupOneBin, friend_num, groupOne, groupTwo)
-
-        #     print("Solution found",
-        #           "\nGroup One:", groupOne,
-        #           "\nGroup Two:", groupTwo)
-        #     break
-        # to shuffle through the possibilities decrement groupOneBin each time
 # time!
 print(time() - start)
