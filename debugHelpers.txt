@@ -1,0 +1,9 @@
+check counting + list conversion + conflict checking functionality
+        # print("group one bin", groupOneBin,
+        #       "\ngroup one ll:", groupOneLL,
+        #       "\ngroup two ll:", groupTwoLL)
+        # print("Group one conflict:", conflict(friend_arr, groupOneLL))
+        # print("Group two conflict:", conflict(friend_arr, groupTwoLL))
+
+print the binary representation of group one to see who is is the group
+        # print(bin(groupOneBin))
