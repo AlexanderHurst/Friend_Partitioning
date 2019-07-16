@@ -34,7 +34,7 @@ For example `python createFriendNet.py 10 9 10` creates a 10 x 10 friendship mat
 
 - [ ] add the ability to split into any number of groups
 
-- [x]
+- [x] ████████████████████████████████████████████████████ 
 
 - [x] wipe the last statement from your memory
 
